@@ -10,7 +10,7 @@ const TaskItem = ({ task, updateTask, deleteTask }) => {
   };
 
   return (
-    <div className="bg-gray-50 p-2 rounded-lg shadow-sm">
+    <div className="bg-gray-200 p-2 rounded-lg shadow-sm">
       {isEditing ? (
         <div className="space-y-2">
           <input
@@ -39,6 +39,7 @@ const TaskItem = ({ task, updateTask, deleteTask }) => {
         <div>
           <h3 className="font-bold">{task.title}</h3>
           <p>{task.description}</p>
+          <p> Date: {new Date(task.timestamp).toLocaleString()} </p>
           <div className="flex space-x-2 mt-2">
             <button
               onClick={() => setIsEditing(true)}

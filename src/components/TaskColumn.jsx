@@ -17,7 +17,7 @@ const TaskColumn = ({ title, tasks, addTask, updateTask, deleteTask }) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md">
+    <div className="bg-white p-4 rounded-lg shadow-md border-0">
       <h2 className="text-xl font-bold mb-4">{title}</h2>
       <div className="space-y-2">
         {tasks.map((task) => (
