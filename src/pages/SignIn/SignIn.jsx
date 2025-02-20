@@ -1,90 +1,100 @@
-import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../Provider/AuthProvider";
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
+import SocialLogin from "../../components/SocialLogin";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SignIn = () => {
-    const { SignIn, continueToGoogle } = useContext(AuthContext);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+    const[show, setShow] = useState(false);
+    const [loading, setLoading] = useState(false); // লোডিং স্টেট
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+    const { SignIn } = useAuth();
 
-    const handleLogin = async (e) => {
+    const handleLogin = (e)=> {
         e.preventDefault();
-        try {
-            await SignIn(email, password);
-            navigate("/dashboard");
-        } catch (error) {
-            setError("Failed to login. Please check your email and password.");
-            console.error("Login error:", error);
-        }
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+
+        setLoading(true); // লোডিং শুরু
+        SignIn(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Your Login has been successful!",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+                setLoading(false); // লোডিং শেষ
+                navigate(from, { replace: true });
+            })
+            .catch(error => {
+                console.error(error.message);
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Login Failed",
+                    text: "Incorrect email or password. Please try again.",
+                    showConfirmButton: true,
+                });
+                navigate('/')
+                setLoading(false); // লোডিং শেষ
+            });
     };
 
-    const handleGoogleLogin = async () => {
-        try {
-            await continueToGoogle();
-            navigate("/dashboard");
-        } catch (error) {
-            setError("Failed to login with Google. Please try again.");
-            console.error("Google login error:", error);
-        }
-    };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-                <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
-
-                {/* ইমেল/পাসওয়ার্ড ফর্ম */}
-                <form onSubmit={handleLogin}>
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="w-full p-2 mb-4 border rounded-md"
-                    />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="w-full p-2 mb-4 border rounded-md"
-                    />
-                    <button
-                        type="submit"
-                        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300"
-                    >
-                        Login
-                    </button>
-                </form>
-
-                {/* Google সাইন-ইন বাটন */}
-                <button
-                    onClick={handleGoogleLogin}
-                    className="w-full mt-4 flex items-center justify-center bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-300"
-                >
-                    <img
-                        src="https://img.icons8.com/color/48/000000/google-logo.png"
-                        alt="Google Logo"
-                        className="w-6 h-6 mr-2"
-                    />
-                    Sign in with Google
-                </button>
-                <div className="mt-5">
-                    <span className="py-5">
-                        New here? <Link to='signup'> Create an Envato account</Link>
-                    </span>
+        <div className="hero-content flex-col-reverse md:flex-row-reverse">
+            <div
+                className="card bg-base-75 bg-center bg-cover md:w-[40%] shadow-2xl">
+                <div className='text-center px-5'>
+                    <h1 className="text-5xl font-bold">Sign In now!</h1>
+                    {/* <img className='w-36 h-24 mt-4 m-auto' src={logo || 'kj'} alt="" /> */}
                 </div>
-
-                {/* এরর মেসেজ */}
-                {error && (
-                    <p className="mt-4 text-center text-red-600 font-semibold">{error}</p>
-                )}
+                <form onSubmit={handleLogin} className="card-body">
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text text-lg">Email</span>
+                        </label>
+                        <input type="email" placeholder="email"
+                            name="email"
+                            className="input input-bordered dark:bg-gray-800 dark:text-white text-black" required />
+                    </div>
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text text-lg">Password</span>
+                        </label>
+                        <input type={show ? 'text' : 'password'}
+                            name="password"
+                            placeholder="password" className="input input-bordered dark:bg-gray-800 dark:text-white text-black" required />
+                        <div onClick={() => setShow(!show)} className='w-10 absolute right-6 top-[350px] text-orange-700 '>
+                            {
+                                show ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
+                            }
+                        </div>
+                        <label className="label">
+                            <a href="#" className="label-text-alt link link-hover text-cyan-100">Forgot password?</a>
+                        </label>
+                    </div>
+                    <div className="form-control mt-6">
+                        <button className="btn bg-violet-300" type="submit" disabled={loading}>
+                            {loading ? <span className="loading loading-spinner text-success ">Logging in...</span> : "Login"}
+                        </button>
+                    </div>
+                </form>
+                <p className='px-6'><small>New Here? <Link className='text-blue-700 text-sm font-bold' to="/signup"> Create an account</Link></small></p>
+                <SocialLogin></SocialLogin>
             </div>
+
+    
         </div>
     );
 };
-
 
 export default SignIn;

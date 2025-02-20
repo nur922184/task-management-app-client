@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
+import Logout from "./logout";
+
 
 const Navbar = () => {
     const {user} = useContext(AuthContext)
   return (
     <nav className="bg-blue-600 p-4 text-white">
+        
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="text-xl font-bold">
           MyApp
@@ -18,8 +21,9 @@ const Navbar = () => {
             Sign Up
           </Link>
         </div>
+        <Logout></Logout>
       </div>
-      <p>{user.email}</p>
+      <p>{user?.email}</p>
     </nav>
   );
 };
