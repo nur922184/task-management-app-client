@@ -1,7 +1,6 @@
 import React, { use, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
-import Logout from "./logout";
 
 
 const Navbar = () => {
@@ -17,7 +16,7 @@ const Navbar = () => {
             <>
               <div className="flex flex-row items-center gap-5">
                 <Link to="/dashboard" className="hover:text-gray-200">Dashboard</Link>
-                <span className="font-semibold">{user.displayName}</span>
+                <span className="font-semibold">{user.email}</span>
                 <img className="w-14 h-14 rounded-full" src={user.photoURL} alt="" />
               </div>
             </>

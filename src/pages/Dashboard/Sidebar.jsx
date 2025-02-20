@@ -1,31 +1,35 @@
-import React from "react";
-import { FaTasks, FaUser, FaSignOutAlt } from "react-icons/fa";
-import { Link, } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import React, { useState } from "react";
+import { FaTasks, FaUser, FaBars, FaTimes } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import Logout from "../../components/logout";
 
 const Sidebar = () => {
-    const { user,} = useAuth();
 
     return (
-        <aside className="w-64 bg-blue-800 text-white p-4 flex flex-col h-screen">
-            <h2 className="text-2xl font-bold mb-6">Dashboard</h2>
-            <nav className="flex-1">
-                <ul>
-                    <li className="mb-4">
-                        <Link to="/tasks" className="flex items-center space-x-2">
-                            <FaTasks /> <span>Tasks</span>
-                        </Link>
-                    </li>
-                    <li className="mb-4">
-                        <Link to="/dashboard/profile" className="flex items-center space-x-2">
-                            <FaUser /> <span>Profile</span>
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
-            <Logout></Logout>
-        </aside>
+        <div>
+
+            {/* Sidebar */}
+            <aside className="bg-gray-800 h-screen text-white p-6">
+                <h2 className="text-2xl font-bold mb-6 sm:text-xl">Dashboard</h2>
+                <nav className="flex-1">
+                    <ul>
+                        <li className="mb-4">
+                            <Link to="/dashboard/tasks" className="flex items-center space-x-2 text-lg sm:text-base">
+                                <FaTasks /> <span>Tasks</span>
+                            </Link>
+                        </li>
+                        <li className="mb-4">
+                            <Link to="/dashboard/profile" className="flex items-center space-x-2 text-lg sm:text-base">
+                                <FaUser /> <span>Profile</span>
+                            </Link>
+                        </li>
+                    </ul>
+                </nav>
+                <div>
+                    <Logout></Logout>
+                </div>
+            </aside>
+        </div>
     );
 };
 

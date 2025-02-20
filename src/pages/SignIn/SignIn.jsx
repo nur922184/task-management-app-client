@@ -47,7 +47,7 @@ const SignIn = () => {
 
 
     return (
-        <div className="hero-content flex-col-reverse md:flex-row-reverse">
+        <div className="hero-content flex-col-reverse md:flex-row-reverse h-screen">
             <div
                 className="card bg-base-75 bg-center bg-cover md:w-[40%] shadow-2xl">
                 <div className='text-center px-5'>
