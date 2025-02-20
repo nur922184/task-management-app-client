@@ -9,8 +9,6 @@ const SignIn = () => {
     const[show, setShow] = useState(false);
     const [loading, setLoading] = useState(false); // লোডিং স্টেট
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
     const { SignIn } = useAuth();
 
     const handleLogin = (e)=> {
@@ -32,7 +30,7 @@ const SignIn = () => {
                     timer: 1500,
                 });
                 setLoading(false); // লোডিং শেষ
-                navigate(from, { replace: true });
+                navigate("/dashboard");
             })
             .catch(error => {
                 console.error(error.message);
@@ -43,7 +41,6 @@ const SignIn = () => {
                     text: "Incorrect email or password. Please try again.",
                     showConfirmButton: true,
                 });
-                navigate('/')
                 setLoading(false); // লোডিং শেষ
             });
     };
@@ -73,7 +70,7 @@ const SignIn = () => {
                         <input type={show ? 'text' : 'password'}
                             name="password"
                             placeholder="password" className="input input-bordered dark:bg-gray-800 dark:text-white text-black" required />
-                        <div onClick={() => setShow(!show)} className='w-10 absolute right-6 top-[350px] text-orange-700 '>
+                        <div onClick={() => setShow(!show)} className='w-10 absolute right-6 top-[240px] text-orange-700 '>
                             {
                                 show ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
                             }

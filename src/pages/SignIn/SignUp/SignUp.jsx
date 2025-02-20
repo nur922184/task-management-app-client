@@ -2,11 +2,13 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import SocialLogin from "../../../components/SocialLogin";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SignUp = () => {
     const [fullName, setFullName] = useState("");
     const [photoUrl, setPhotoUrl] = useState("");
     const [email, setEmail] = useState("");
+    const [show, setShow] = useState(false);
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -16,28 +18,37 @@ const SignUp = () => {
 
     const handleSignUp = async (e) => {
         e.preventDefault();
-        setError(""); // আগের error মুছে ফেলা
+        setError("");
 
-        // ক্লায়েন্ট-সাইড ইনপুট ভ্যালিডেশন
         if (password.length < 6) {
             setError("Password should be at least 6 characters long!");
+            alert("Password should be at least 6 characters long!");
             return;
         }
 
         try {
-            // নতুন ব্যবহারকারী তৈরি করুন
+            // ✅ Firebase/Auth দিয়ে ইউজার তৈরি করা
             const user = await createNewUser(email, password);
 
-            // যদি ইউজার না থাকে, তাহলে এরর দেখানো হবে
             if (!user) {
                 setError("Failed to create an account. Please try again!");
+                alert("Failed to create an account. Please try again!");
                 return;
             }
 
-            // ইউজারের প্রোফাইল আপডেট করুন
+            // ✅ ইউজারের প্রোফাইল আপডেট করা
             await UpdateUserProfile(fullName, photoUrl);
 
-            // সফল হলে ড্যাশবোর্ডে রিডাইরেক্ট করুন
+            // ✅ **MongoDB-তে ইউজারের ডাটা পাঠানো**
+            await fetch("http://localhost:5000/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ fullName, email, photoUrl }),
+            });
+
+            alert("Successful sign-up!");
             navigate("/dashboard");
         } catch (error) {
             console.error("Sign up error:", error);
@@ -73,14 +84,21 @@ const SignUp = () => {
                         className="w-full p-2 mb-4 border rounded-md"
                         required
                     />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="w-full p-2 mb-4 border rounded-md"
-                        required
-                    />
+                    <div>
+                        <input
+                            type={show ? 'text' : 'password'}
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="w-full p-2 mb-4 border rounded-md"
+                            required
+                        />
+                        <div onClick={() => setShow(!show)} className='w-10 absolute ml-[355px] -mt-11 items-end text-end text-orange-700 '>
+                            {
+                                show ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
+                            }
+                        </div>
+                    </div>
                     <button
                         type="submit"
                         className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300"
