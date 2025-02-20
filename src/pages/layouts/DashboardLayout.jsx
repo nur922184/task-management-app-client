@@ -16,15 +16,15 @@ const DashboardLayout = () => {
             {/* Mobile Sidebar with Overlay */}
             {isSidebarOpen && (
                 <div
-                    className=" md:hidden"
+                    className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
                     onClick={() => setIsSidebarOpen(false)}
                 ></div>
             )}
 
+            {/* Mobile Sidebar */}
             <aside
-                className={`fixed left-0 top-0 h-full w-64 bg-white shadow-lg transform transition-transform ${
-                    isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-                } md:hidden`}
+                className={`fixed left-0 top-0 h-full w-64 bg-white shadow-lg transform transition-transform z-50 
+                ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} md:hidden`}
             >
                 <Sidebar />
             </aside>

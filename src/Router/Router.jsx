@@ -8,6 +8,7 @@ import Profile from "../pages/Dashboard/Profile";
 import Tasks from "../pages/Dashboard/Tasks";
 import TaskItem from "../components/TaskItem";
 import TaskList from "../components/TaskList";
+import DsCard from "../components/DsCard";
 
 
 const Router = createBrowserRouter([
@@ -27,6 +28,10 @@ const Router = createBrowserRouter([
         path: "/dashboard",
         element: <DashboardLayout></DashboardLayout>,
         children:[
+          {
+            path:'/dashboard/card', 
+            element: <DsCard></DsCard>
+          },
           {
             path:'/dashboard/profile', 
             element: <Profile></Profile>

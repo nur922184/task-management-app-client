@@ -3,9 +3,11 @@ import TaskItem from './TaskItem';
 import useAuth from '../hooks/useAuth';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const TaskColumn = ({ title, tasks, addTask, updateTask, deleteTask }) => {
     const [newTaskTitle, setNewTaskTitle] = useState('');
+    const navigate = useNavigate()
     const [loading, setLoading] = useState(false); // ✅ লোডিং স্টেট
     const { user } = useAuth();
 
@@ -21,6 +23,7 @@ const TaskColumn = ({ title, tasks, addTask, updateTask, deleteTask }) => {
             try {
                 await addTask(newTask);
                 setNewTaskTitle('');
+                navigate('/dashboard/card')
                 toast.success('Task added successfully! 🎉');
             } catch (error) {
                 toast.error('Failed to add task. Please try again. 😞');
