@@ -6,6 +6,8 @@ import SignUp from "../pages/SignIn/SignUp/SignUp";
 import DashboardLayout from "../pages/layouts/DashboardLayout";
 import Profile from "../pages/Dashboard/Profile";
 import Tasks from "../pages/Dashboard/Tasks";
+import TaskItem from "../components/TaskItem";
+import TaskList from "../components/TaskList";
 
 
 const Router = createBrowserRouter([
@@ -32,6 +34,10 @@ const Router = createBrowserRouter([
           {
             path:'/dashboard/tasks', 
             element: <Tasks></Tasks>
+          },
+          {
+            path:'/dashboard/list', 
+            element: <TaskItem></TaskItem>
           }
         ]
       },

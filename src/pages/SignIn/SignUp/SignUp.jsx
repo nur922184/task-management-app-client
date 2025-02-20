@@ -40,7 +40,7 @@ const SignUp = () => {
             await UpdateUserProfile(fullName, photoUrl);
 
             // ✅ **MongoDB-তে ইউজারের ডাটা পাঠানো**
-            await fetch("http://localhost:5000/users", {
+            await fetch("https://task-management-backend-ochre.vercel.app/users", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

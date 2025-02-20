@@ -15,12 +15,17 @@ const Sidebar = () => {
                     <ul>
                         <li className="mb-4">
                             <Link to="/dashboard/tasks" className="flex items-center space-x-2 text-lg sm:text-base">
-                                <FaTasks /> <span>Tasks</span>
+                                <FaTasks /> <span>Tasks Add</span>
                             </Link>
                         </li>
                         <li className="mb-4">
                             <Link to="/dashboard/profile" className="flex items-center space-x-2 text-lg sm:text-base">
                                 <FaUser /> <span>Profile</span>
+                            </Link>
+                        </li>
+                        <li className="mb-4">
+                            <Link to="/dashboard/list" className="flex items-center space-x-2 text-lg sm:text-base">
+                                <FaTasks /> <span>Tasks List</span>
                             </Link>
                         </li>
                     </ul>

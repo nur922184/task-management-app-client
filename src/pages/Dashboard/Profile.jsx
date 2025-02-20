@@ -15,7 +15,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/users/${email}`);
+                const response = await axios.get(`https://task-management-backend-ochre.vercel.app/users/${email}`);
                 setUser(response.data);
                 setLoading(false);
             } catch (err) {
@@ -29,7 +29,7 @@ const Profile = () => {
 
     const handleSave = async (updatedUser) => {
         try {
-            const response = await axios.put(`http://localhost:5000/users/${email}`, updatedUser);
+            const response = await axios.put(`https://task-management-backend-ochre.vercel.app/users/${email}`, updatedUser);
             setUser(response.data);
         } catch (err) {
             setError(err.message);
