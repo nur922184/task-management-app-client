@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
+import { DndContext, useDroppable } from '@dnd-kit/core';
 import TaskItem from './TaskItem';
 import useAuth from '../hooks/useAuth';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
-const TaskColumn = ({ title, tasks, addTask, updateTask, deleteTask }) => {
+const TaskColumn = ({ title, tasks, addTask, updateTask, deleteTask, onDragEnd }) => {
     const [newTaskTitle, setNewTaskTitle] = useState('');
     const navigate = useNavigate()
-    const [loading, setLoading] = useState(false); // ✅ লোডিং স্টেট
+    const [loading, setLoading] = useState(false);
     const { user } = useAuth();
+    
+    const { setNodeRef } = useDroppable({ id: title });
 
     const handleAddTask = async () => {
         if (newTaskTitle.trim()) {
@@ -32,18 +35,20 @@ const TaskColumn = ({ title, tasks, addTask, updateTask, deleteTask }) => {
     };
 
     return (
-        <div className="bg-white p-4 rounded-lg shadow-md border-0">
+        <div ref={setNodeRef} className="bg-white p-4 rounded-lg shadow-md border-0 min-h-[200px]">
             <h2 className="text-xl font-bold mb-4">{title}</h2>
-            <div className="space-y-2">
-                {tasks.map((task) => (
-                    <TaskItem
-                        key={task._id}
-                        task={task}
-                        updateTask={updateTask}
-                        deleteTask={deleteTask}
-                    />
-                ))}
-            </div>
+            <DndContext onDragEnd={onDragEnd}>
+                <div className="space-y-2">
+                    {tasks.map((task) => (
+                        <TaskItem
+                            key={task._id}
+                            task={task}
+                            updateTask={updateTask}
+                            deleteTask={deleteTask}
+                        />
+                    ))}
+                </div>
+            </DndContext>
             <div className="mt-4">
                 <input
                     type="text"
@@ -69,6 +74,7 @@ const TaskColumn = ({ title, tasks, addTask, updateTask, deleteTask }) => {
 };
 
 export default TaskColumn;
+
 // import React, { useState } from 'react';
 // import useAuth from '../hooks/useAuth';
 // import { toast } from 'react-toastify';

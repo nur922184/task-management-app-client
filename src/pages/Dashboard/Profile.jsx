@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
 import { FaEdit } from 'react-icons/fa';
+import Loading from '../../components/Loading';
 
 
 const Profile = () => {
@@ -37,7 +38,7 @@ const Profile = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <Loading></Loading>;
     }
 
     if (error) {

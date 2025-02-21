@@ -25,7 +25,7 @@ const SocialLogin = () => {
                 body: JSON.stringify(user),
             });
 
-            navigate("/dashboard");
+            navigate("/dashboard/profile");
         }
     } catch (error) {
         setError("Failed to login with Google. Please try again.");

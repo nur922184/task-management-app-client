@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion'; // ✅ অ্যানিমেশন লাইব্রেরি
+import { MdDelete, MdEditNote } from 'react-icons/md';
 
 const TaskItem = ({ task, updateTask, deleteTask }) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -46,18 +47,18 @@ const TaskItem = ({ task, updateTask, deleteTask }) => {
                 <div>
                     <h3 className="font-bold">{task?.title}</h3>
                     <p>{task?.description}</p>
-                    <div className="flex space-x-2 mt-2">
+                    <div className="flex space-x-2 justify-end mt-2">
                         <button
                             onClick={() => setIsEditing(true)}
-                            className="bg-yellow-500 text-white p-1 rounded"
+                            className="text-green-700 p-1 rounded"
                         >
-                            Edit
+                            <MdEditNote size={20}/>
                         </button>
                         <button
                             onClick={() => deleteTask(task._id)}
-                            className="bg-red-500 text-white p-1 rounded"
+                            className="text-red-500  rounded"
                         >
-                            Delete
+                            <MdDelete size={20}  />
                         </button>
                     </div>
                 </div>

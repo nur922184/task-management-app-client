@@ -9,6 +9,7 @@ import Tasks from "../pages/Dashboard/Tasks";
 import TaskItem from "../components/TaskItem";
 import TaskList from "../components/TaskList";
 import DsCard from "../components/DsCard";
+import PrivatRoute from "./PrivatRoute";
 
 
 const Router = createBrowserRouter([
@@ -26,23 +27,23 @@ const Router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <DashboardLayout></DashboardLayout>,
+        element: <PrivatRoute><DashboardLayout></DashboardLayout></PrivatRoute> ,
         children:[
           {
             path:'/dashboard/card', 
-            element: <DsCard></DsCard>
+            element: <PrivatRoute> <DsCard></DsCard></PrivatRoute>
           },
           {
             path:'/dashboard/profile', 
-            element: <Profile></Profile>
+            element: <PrivatRoute><Profile></Profile></PrivatRoute> 
           },
           {
             path:'/dashboard/tasks', 
-            element: <Tasks></Tasks>
+            element: <PrivatRoute><Tasks></Tasks></PrivatRoute> 
           },
           {
             path:'/dashboard/list', 
-            element: <TaskItem></TaskItem>
+            element: <PrivatRoute><TaskItem></TaskItem></PrivatRoute>
           }
         ]
       },

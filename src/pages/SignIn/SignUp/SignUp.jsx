@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import SocialLogin from "../../../components/SocialLogin";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
     const [fullName, setFullName] = useState("");
@@ -15,6 +16,7 @@ const SignUp = () => {
 
     // AuthContext থেকে createNewUser এবং UpdateUserProfile নিয়ে আসা
     const { createNewUser, UpdateUserProfile } = useContext(AuthContext);
+
 
     const handleSignUp = async (e) => {
         e.preventDefault();
@@ -40,16 +42,27 @@ const SignUp = () => {
             await UpdateUserProfile(fullName, photoUrl);
 
             // ✅ **MongoDB-তে ইউজারের ডাটা পাঠানো**
-            await fetch("https://task-management-backend-ochre.vercel.app/users", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ fullName, email, photoUrl }),
-            });
-
-            alert("Successful sign-up!");
-            navigate("/dashboard");
+            try {
+                const response = await fetch("https://task-management-backend-ochre.vercel.app/users", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ fullName, email, photoUrl }),
+                });
+            
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+            
+                const data = await response.json();
+                console.log("User data saved to MongoDB:", data);
+            } catch (error) {
+                console.error("Error saving user data to MongoDB:", error);
+                setError("Failed to save user data. Please try again!");
+            }
+             toast.success('sign-up successfully! 🎉');
+            navigate("/dashboard/profile");
         } catch (error) {
             console.error("Sign up error:", error);
             setError(error.message || "An unexpected error occurred!");

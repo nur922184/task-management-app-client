@@ -17,7 +17,7 @@ const Navbar = () => {
               <div className="flex flex-row items-center gap-5">
                 <Link to="/dashboard/card" className="hover:text-gray-200">Dashboard</Link>
                 <span className="font-semibold">{user.email}</span>
-                <img className="w-14 h-14 rounded-full" src={user.photoURL} alt="" />
+                <img className="w-10 h-10 rounded-full" src={user.photoURL} alt="" />
               </div>
             </>
           ) : (

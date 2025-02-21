@@ -23,11 +23,11 @@ const Sidebar = () => {
                                 <FaUser /> <span>Profile</span>
                             </Link>
                         </li>
-                        <li className="mb-4">
+                        {/* <li className="mb-4">
                             <Link to="/dashboard/list" className="flex items-center space-x-2 text-lg sm:text-base">
                                 <FaTasks /> <span>Tasks List</span>
                             </Link>
-                        </li>
+                        </li> */}
                     </ul>
                 </nav>
                 <div>

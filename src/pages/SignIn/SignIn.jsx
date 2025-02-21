@@ -30,7 +30,7 @@ const SignIn = () => {
                     timer: 1500,
                 });
                 setLoading(false); // লোডিং শেষ
-                navigate("/dashboard");
+                navigate("/dashboard/profile");
             })
             .catch(error => {
                 console.error(error.message);
