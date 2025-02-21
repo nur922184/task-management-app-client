@@ -4,6 +4,8 @@ import TaskColumn from '../../components/TaskColumn';
 import useAuth from '../../hooks/useAuth';
 import { DndContext, closestCorners } from '@dnd-kit/core';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
+import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 
 const Tasks = () => {
     const [tasks, setTasks] = useState([]);
@@ -36,13 +38,50 @@ const Tasks = () => {
     };
 
     const updateTask = async (id, updatedTask) => {
-        await axios.put(`https://task-management-backend-ochre.vercel.app/tasks/${id}`, updatedTask);
-        setTasks(tasks.map((task) => (task._id === id ? updatedTask : task)));
+        try {
+            await axios.put(`https://task-management-backend-ochre.vercel.app/tasks/${id}`, updatedTask);
+            setTasks(tasks.map((task) => (task._id === id ? updatedTask : task)));
+    
+            toast.success("Task updated successfully! ✅", {
+                position: "top-right",
+                autoClose: 3000,
+            });
+        } catch (error) {
+            toast.error("Failed to update task. Please try again! ❌", {
+                position: "top-right",
+                autoClose: 3000,
+            });
+        }
     };
-
     const deleteTask = async (id) => {
-        await axios.delete(`https://task-management-backend-ochre.vercel.app/tasks/${id}`);
-        setTasks(tasks.filter((task) => task._id !== id));
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!",
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await axios.delete(`https://task-management-backend-ochre.vercel.app/tasks/${id}`);
+                    setTasks(tasks.filter((task) => task._id !== id));
+    
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your task has been deleted.",
+                        icon: "success",
+                    });
+                } catch (error) {
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Something went wrong. Please try again.",
+                        icon: "error",
+                    });
+                }
+            }
+        });
     };
 
     const onDragEnd = (event) => {

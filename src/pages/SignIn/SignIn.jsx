@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import SignUpImage from '../../images/FeatureImage_project_management_statistics.jpg'
 import Swal from "sweetalert2";
 import SocialLogin from "../../components/SocialLogin";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SignIn = () => {
-    const[show, setShow] = useState(false);
+    const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false); // লোডিং স্টেট
     const navigate = useNavigate();
     const { SignIn } = useAuth();
 
-    const handleLogin = (e)=> {
+    const handleLogin = (e) => {
         e.preventDefault();
         const form = e.target;
         const email = form.email.value;
@@ -47,7 +48,8 @@ const SignIn = () => {
 
 
     return (
-        <div className="hero-content flex-col-reverse md:flex-row-reverse h-screen">
+        <div 
+            className="hero-content flex-col-reverse md:flex-row-reverse h-screen">
             <div
                 className="card bg-base-75 bg-center bg-cover md:w-[40%] shadow-2xl">
                 <div className='text-center px-5'>
@@ -89,7 +91,7 @@ const SignIn = () => {
                 <SocialLogin></SocialLogin>
             </div>
 
-    
+
         </div>
     );
 };

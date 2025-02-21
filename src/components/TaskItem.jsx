@@ -11,6 +11,11 @@ const TaskItem = ({ task, updateTask, deleteTask }) => {
         setIsEditing(false);
     };
 
+    const handleCancel = () => {
+        setEditedTask(task); // পুরোনো মান ফিরিয়ে আনা
+        setIsEditing(false);
+    };
+
     return (
         <motion.div 
             initial={{ opacity: 0, y: -10 }}
@@ -36,12 +41,20 @@ const TaskItem = ({ task, updateTask, deleteTask }) => {
                         }
                         className="w-full p-1 border rounded"
                     />
-                    <button
-                        onClick={handleSave}
-                        className="bg-green-500 text-white p-1 rounded"
-                    >
-                        Save
-                    </button>
+                    <div className="flex space-x-2 mt-2">
+                        <button
+                            onClick={handleSave}
+                            className="bg-green-500 text-white p-1 rounded w-full"
+                        >
+                            Save
+                        </button>
+                        <button
+                            onClick={handleCancel}
+                            className="bg-gray-400 text-white p-1 rounded w-full"
+                        >
+                            Cancel
+                        </button>
+                    </div>
                 </div>
             ) : (
                 <div>
@@ -56,9 +69,9 @@ const TaskItem = ({ task, updateTask, deleteTask }) => {
                         </button>
                         <button
                             onClick={() => deleteTask(task._id)}
-                            className="text-red-500  rounded"
+                            className="text-red-500 rounded"
                         >
-                            <MdDelete size={20}  />
+                            <MdDelete size={20} />
                         </button>
                     </div>
                 </div>

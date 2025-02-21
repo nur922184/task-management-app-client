@@ -15,7 +15,7 @@ const Navbar = () => {
           {user ? (
             <>
               <div className="flex flex-row items-center gap-5">
-                <Link to="/dashboard/card" className="hover:text-gray-200">Dashboard</Link>
+                <Link to="/dashboard/card" className="hover:bg-gray-500 rounded-lg text-gray-950 bg-gray-400 p-2">Dashboard</Link>
                 <span className="font-semibold">{user.email}</span>
                 <img className="w-10 h-10 rounded-full" src={user.photoURL} alt="" />
               </div>

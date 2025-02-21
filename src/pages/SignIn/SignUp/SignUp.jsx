@@ -12,33 +12,31 @@ const SignUp = () => {
     const [show, setShow] = useState(false);
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false); // ✅ লোডিং স্টেট
     const navigate = useNavigate();
 
-    // AuthContext থেকে createNewUser এবং UpdateUserProfile নিয়ে আসা
     const { createNewUser, UpdateUserProfile } = useContext(AuthContext);
-
 
     const handleSignUp = async (e) => {
         e.preventDefault();
         setError("");
+        setLoading(true); // ✅ লোডিং শুরু
 
         if (password.length < 6) {
-            setError("Password should be at least 6 characters long!");
-            alert("Password should be at least 6 characters long!");
+            setLoading(false);
+            toast.error("Password should be at least 6 characters long! ❌");
             return;
         }
 
         try {
-            // ✅ Firebase/Auth দিয়ে ইউজার তৈরি করা
             const user = await createNewUser(email, password);
 
             if (!user) {
-                setError("Failed to create an account. Please try again!");
-                alert("Failed to create an account. Please try again!");
+                setLoading(false);
+                toast.error("Failed to create an account! ❌");
                 return;
             }
 
-            // ✅ ইউজারের প্রোফাইল আপডেট করা
             await UpdateUserProfile(fullName, photoUrl);
 
             // ✅ **MongoDB-তে ইউজারের ডাটা পাঠানো**
@@ -50,22 +48,20 @@ const SignUp = () => {
                     },
                     body: JSON.stringify({ fullName, email, photoUrl }),
                 });
-            
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-            
-                const data = await response.json();
-                console.log("User data saved to MongoDB:", data);
+
+                toast.success("Sign-up successful! 🎉");
+                navigate("/dashboard/profile");
             } catch (error) {
-                console.error("Error saving user data to MongoDB:", error);
-                setError("Failed to save user data. Please try again!");
+                toast.error("Failed to save user data. Please try again! ❌");
             }
-             toast.success('sign-up successfully! 🎉');
-            navigate("/dashboard/profile");
         } catch (error) {
-            console.error("Sign up error:", error);
-            setError(error.message || "An unexpected error occurred!");
+            toast.error(error.message || "An unexpected error occurred! ❌");
+        } finally {
+            setLoading(false); // ✅ লোডিং বন্ধ
         }
     };
 
@@ -97,7 +93,7 @@ const SignUp = () => {
                         className="w-full p-2 mb-4 border rounded-md"
                         required
                     />
-                    <div>
+                    <div className="relative">
                         <input
                             type={show ? 'text' : 'password'}
                             placeholder="Password"
@@ -106,30 +102,30 @@ const SignUp = () => {
                             className="w-full p-2 mb-4 border rounded-md"
                             required
                         />
-                        <div onClick={() => setShow(!show)} className='w-10 absolute ml-[355px] -mt-11 items-end text-end text-orange-700 '>
-                            {
-                                show ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
-                            }
+                        <div onClick={() => setShow(!show)} className="absolute right-3 top-3 text-orange-700 cursor-pointer">
+                            {show ? <FaEyeSlash /> : <FaEye />}
                         </div>
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300"
+                        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 flex items-center justify-center"
+                        disabled={loading} // ✅ লোডিং হলে বাটন ডিজেবল
                     >
-                        Sign Up
+                        {loading ? (
+                            <span className="border-t-2 border-white border-solid rounded-full w-5 h-5 animate-spin"></span>
+                        ) : (
+                            "Sign Up"
+                        )}
                     </button>
                 </form>
-                <SocialLogin></SocialLogin>
-                <div className="mt-5 ">
-                    <span className="py-5 flex flex-row">
-                        Already have an Account?  <Link to='/'> <p className="text-blue-600 underline ml-3"> Sign in here.</p></Link>
+                <SocialLogin />
+                <div className="mt-5 text-center">
+                    <span>
+                        Already have an account?
+                        <Link to="/" className="text-blue-600 underline ml-2">Sign in here.</Link>
                     </span>
                 </div>
-
-                {/* এরর মেসেজ */}
-                {error && (
-                    <p className="mt-4 text-center text-red-600 font-semibold">{error}</p>
-                )}
+                {error && <p className="mt-4 text-center text-red-600 font-semibold">{error}</p>}
             </div>
         </div>
     );
