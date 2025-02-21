@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaTasks, FaUser, FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Logout from "../../components/logout";
+import { RiStickyNoteAddLine } from "react-icons/ri";
 
 const Sidebar = () => {
 
@@ -15,7 +16,12 @@ const Sidebar = () => {
                     <ul>
                         <li className="mb-4">
                             <Link to="/dashboard/tasks" className="flex items-center space-x-2 text-lg sm:text-base">
-                                <FaTasks /> <span>Tasks Add</span>
+                            <RiStickyNoteAddLine /> <span>Tasks Add</span>
+                            </Link>
+                        </li>
+                        <li className="mb-4">
+                            <Link to="/dashboard/lists" className="flex items-center space-x-2 text-lg sm:text-base">
+                                <FaTasks /> <span>Tasks List</span>
                             </Link>
                         </li>
                         <li className="mb-4">
@@ -23,11 +29,6 @@ const Sidebar = () => {
                                 <FaUser /> <span>Profile</span>
                             </Link>
                         </li>
-                        {/* <li className="mb-4">
-                            <Link to="/dashboard/list" className="flex items-center space-x-2 text-lg sm:text-base">
-                                <FaTasks /> <span>Tasks List</span>
-                            </Link>
-                        </li> */}
                     </ul>
                 </nav>
                 <div>

@@ -44,6 +44,10 @@ const Router = createBrowserRouter([
           {
             path:'/dashboard/list', 
             element: <PrivatRoute><TaskItem></TaskItem></PrivatRoute>
+          },
+          {
+            path:'/dashboard/lists', 
+            element: <PrivatRoute><TaskList></TaskList></PrivatRoute>
           }
         ]
       },
