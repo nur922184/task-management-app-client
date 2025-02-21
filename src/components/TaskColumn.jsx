@@ -39,7 +39,7 @@ const TaskColumn = ({ title, tasks, addTask, updateTask, deleteTask, onDragEnd }
 
     return (
         <div ref={setNodeRef} className="bg-white p-4 rounded-lg shadow-md border-0 min-h-[200px]">
-            <h2 className="text-xl font-bold mb-4">{title}</h2>
+            <h2 className="text-xl font-bold mb-4 text-blue-500">{title}</h2>
             <DndContext onDragEnd={onDragEnd}>
                 <div className="space-y-2">
                     {tasks.map((task) => (

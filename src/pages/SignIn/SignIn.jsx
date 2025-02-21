@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import SignUpImage from '../../images/FeatureImage_project_management_statistics.jpg'
 import Swal from "sweetalert2";
 import SocialLogin from "../../components/SocialLogin";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -48,7 +47,7 @@ const SignIn = () => {
 
 
     return (
-        <div 
+        <div
             className="hero-content flex-col-reverse md:flex-row-reverse h-screen">
             <div
                 className="card bg-base-75 bg-center bg-cover md:w-[40%] shadow-2xl">
@@ -86,9 +85,9 @@ const SignIn = () => {
                             {loading ? <span className="loading loading-spinner text-success ">Logging in...</span> : "Login"}
                         </button>
                     </div>
+                    <SocialLogin></SocialLogin>
+                    <p className='px-6 py-7 text-center'><small>Don't have an account? <Link className='text-blue-600 underline ml-2' to="/signup"> Create an account</Link></small></p>
                 </form>
-                <p className='px-6'><small>New Here? <Link className='text-blue-700 text-sm font-bold' to="/signup"> Create an account</Link></small></p>
-                <SocialLogin></SocialLogin>
             </div>
 
 

@@ -61,8 +61,8 @@ const Profile = () => {
                         <FaEdit></FaEdit> edit
                     </button>
                 </div>
-                <h1 className="text-2xl font-bold text-blue-800">About Me</h1>
-                <h2 className="text-gray-900 text-2xl font-semibold">{users.fullName}</h2>
+                <h1 className="text-xl font-bold text-left text-blue-800">About Me</h1>
+                <h2 className="text-gray-900 text-2xl font-semibold">⩶ {users.fullName} ⩶ </h2>
                 <p className="text-gray-600 mt-2">
                     {users.About}
                 </p>

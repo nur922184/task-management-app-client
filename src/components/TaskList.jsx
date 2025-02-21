@@ -3,6 +3,7 @@ import axios from "axios";
 import useAuth from "../hooks/useAuth";
 import { MdDelete, MdEditNote } from "react-icons/md";
 import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
+import { div } from "framer-motion/client";
 
 const TaskList = () => {
     const { user } = useAuth();
@@ -114,8 +115,9 @@ const CategoryColumn = ({ category, children }) => {
     const { setNodeRef } = useDroppable({ id: category });
 
     return (
+        
         <div ref={setNodeRef} className="bg-white shadow-md p-4 rounded-lg min-h-[200px]">
-            <h2 className="text-xl font-bold mb-2">{category}</h2>
+            <h2 className="text-xl font-bold mb-2 text-blue-500">{category}</h2>
             {children.length > 0 ? children : <p className="text-gray-500">No tasks available</p>}
         </div>
     );
@@ -132,11 +134,11 @@ const DraggableTask = ({ task, deleteTask, openEditModal }) => {
             style={{
                 transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : "none",
             }}
-            className="border-b bg-slate-300 mb-1 p-2 rounded-lg py-2 cursor-grab"
+            className="border-b bg-slate-300 hover:bg-blue-300 mb-1 p-2 rounded-lg py-2 cursor-grab"
         >
-            <p className="font-semibold">{task.title}</p>
-            <p className="text-sm text-gray-500">{task.description || "No Description"}</p>
-            <p className="text-xs text-gray-400">{new Date(task.timestamp).toLocaleString()}</p>
+            <p className="font-semibold text-gray-950">{task.title}</p>
+            <p className="text-sm text-gray-600">{task.description || "No Description"}</p>
+            <p className="text-xs text-end text-blue-500">🕑 {new Date(task.timestamp).toLocaleString()}</p>
             {/* <div className="flex space-x-2 justify-end mt-2">
                 <button onClick={() => openEditModal(task)} className="text-green-700 p-1 rounded">
                     <MdEditNote size={20} />

@@ -7,7 +7,7 @@ const DashboardLayout = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-[250px_1fr] h-screen">
+        <div className="grid grid-cols-1 md:grid-cols-[250px_1fr]">
             {/* Sidebar for Large Screens */}
             <aside className="hidden md:block bg-white shadow-lg">
                 <Sidebar />
@@ -41,7 +41,6 @@ const DashboardLayout = () => {
                     </button>
                     <h1 className="text-lg font-semibold">Dashboard</h1>
                 </div>
-
                 <main className="p-6 bg-gray-100 overflow-auto">
                     <Outlet />
                 </main>

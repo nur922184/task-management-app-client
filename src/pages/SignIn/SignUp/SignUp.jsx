@@ -117,8 +117,8 @@ const SignUp = () => {
                             "Sign Up"
                         )}
                     </button>
+                    <SocialLogin />
                 </form>
-                <SocialLogin />
                 <div className="mt-5 text-center">
                     <span>
                         Already have an account?

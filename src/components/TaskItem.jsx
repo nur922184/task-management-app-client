@@ -17,7 +17,7 @@ const TaskItem = ({ task, updateTask, deleteTask }) => {
     };
 
     return (
-        <motion.div 
+        <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -60,19 +60,24 @@ const TaskItem = ({ task, updateTask, deleteTask }) => {
                 <div>
                     <h3 className="font-bold">{task?.title}</h3>
                     <p>{task?.description}</p>
-                    <div className="flex space-x-2 justify-end mt-2">
-                        <button
-                            onClick={() => setIsEditing(true)}
-                            className="text-green-700 p-1 rounded"
-                        >
-                            <MdEditNote size={20}/>
-                        </button>
-                        <button
-                            onClick={() => deleteTask(task._id)}
-                            className="text-red-500 rounded"
-                        >
-                            <MdDelete size={20} />
-                        </button>
+                    <div className='flex justify-between items-center'>
+                        <div className=''>
+                            <p className='text-sm  text-blue-600'>_______________________</p>
+                        </div>
+                        <div className="flex space-x-2 justify-end mt-2">
+                            <button
+                                onClick={() => setIsEditing(true)}
+                                className="text-blue-600 p-1 rounded"
+                            >
+                                <MdEditNote size={22} />
+                            </button>
+                            <button
+                                onClick={() => deleteTask(task._id)}
+                                className="text-red-500 rounded"
+                            >
+                                <MdDelete size={20} />
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
